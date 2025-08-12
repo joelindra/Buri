@@ -71,7 +71,11 @@ class WebShell:
         
         # CORRECTED LOGIC: This now correctly returns an error string instead of crashing.
         if data.get('status') == 'success':
-            return data.get('output', '')
+            # Safely get the output, defaulting to an empty string if it's None or missing.
+            output = data.get('output', '')
+            if output is None:
+                return "[ERROR] Received empty output from server."
+            return output
         else:
             return f"[ERROR] {data.get('message', 'Unknown server error')}"
 
