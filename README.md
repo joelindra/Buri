@@ -22,7 +22,7 @@ B.U.R.I (Basic Universal Remote Interface) is a **powerful, stateful, and user-f
 **From PyPI (Recommended – Now Available 🚀)**
 1. **You can now install B.U.R.I directly from PyPI**:
    ```bash
-   pip install buri-tod
+   pip install buri
    ```
 
 **From Source**
