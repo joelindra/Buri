@@ -19,13 +19,20 @@ B.U.R.I (Basic Universal Remote Interface) is a **powerful, stateful, and user-f
 
 ## ⚙️ Installation
 
+**From PyPI (Recommended – Now Available 🚀)**
+1. **You can now install B.U.R.I directly from PyPI**:
+   ```bash
+   pip install buri-tod
+   ```
+
+**From Source**
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/joelindra/buri.git
    cd buri
    ```
 
-2. **Install Dependencies**:
+3. **Install Dependencies**:
    Ensure you have **Python 3.6+** installed, then install the required libraries:
    ```bash
    pip install -r requirements.txt
