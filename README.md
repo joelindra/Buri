@@ -17,6 +17,12 @@ B.U.R.I (Backdoor Utility for Remote Interaction) is a modular, encrypted comman
 
 ## Installation
 
+### PyPI
+```
+pip install buri-tod
+pip install --upgrade buri-tod
+```
+
 ### Prerequisites
 - Python 3.8+
 - Required Python packages:
