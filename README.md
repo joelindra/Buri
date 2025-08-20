@@ -27,7 +27,7 @@ B.U.R.I (Backdoor Utility for Remote Interaction) is a modular, encrypted comman
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Anonre/Buri.git
+   git clone https://github.com/joelindra/Buri.git
    cd Buri
    ```
 2. Install dependencies:
